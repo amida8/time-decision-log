@@ -58,5 +58,6 @@ By lowering the cost of recording actions, this tool helps:
 No frameworks. No build tools. Runs instantly in the browser.
 
 ---
+https://amida8.github.io/time-decision-log/
 
 ## 📂 Project Structure
