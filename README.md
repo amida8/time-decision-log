@@ -1,5 +1,4 @@
 # time-decision-log
-# Fast Decision Tracker
 
 A lightweight web application for **fast decision making and daily action tracking**.
 
