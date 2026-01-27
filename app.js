@@ -1,3 +1,5 @@
+import { supabase } from "./supabaseClient.js";
+
 // ===== Storage Keys =====
 const KEY_LOGS = "fd_time_logs_v1";
 const KEY_CATS = "fd_categories_v1";
@@ -319,3 +321,14 @@ function backupJSON(){
   a.download = 'backup.json';
   a.click();
 }
+async function testInsert() {
+  const { data, error } = await supabase
+    .from("activity_logs")
+    .insert([{ activity: "test", log_date: new Date().toISOString().slice(0,10) }])
+    .select();
+
+  console.log("insert data:", data);
+  console.log("insert error:", error);
+}
+
+testInsert();
