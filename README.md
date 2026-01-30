@@ -72,7 +72,7 @@ https://amida8.github.io/time-decision-log/
 ---
 
 ## 📂 プロジェクト構成（Project Structure）
-.
+
 ├── README.md
 │   └─ プロジェクト概要・機能説明・テスト内容
 ├── index.html
