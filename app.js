@@ -6,8 +6,23 @@ const KEY_CATS = "fd_categories_v1";
 
 // ===== Default Categories =====
 const DEFAULT_CATEGORIES = [
-  "学习日语", "写代码", "上课", "兼职", "运动", "吃饭", "睡觉", "通勤", "休息", "刷手机"
+  "日本語学習", "コーディング", "授業", "アルバイト", "運動",
+  "食事", "睡眠", "通勤", "休憩", "スマホ"
 ];
+
+// ===== UI Text (JA) =====
+const UI = {
+  clickToLogOnce: "クリックすると1件記録します",
+  inputCategoryName: "カテゴリ名を入力してください",
+  categoryExists: "このカテゴリはすでに存在します",
+  noRecentLogs: "まだ記録がありません",
+  rangeSummary: (start, end, count) =>
+    `期間：${start} ～ ${end}（終了日は含まない）｜件数：${count}`,
+  noData: "データなし",
+  delete: "削除",
+  exportNoData: "エクスポートできるデータがありません",
+  confirmClear: "すべてのデータを削除します。よろしいですか？（元に戻せません）"
+};
 
 // ===== State =====
 let categories = loadCategories();
@@ -64,7 +79,7 @@ function renderButtons() {
   categories.forEach(cat => {
     const b = document.createElement("button");
     b.textContent = cat;
-    b.title = "点击记录一次";
+    b.title = UI.clickToLogOnce;
     b.addEventListener("click", () => addLog(cat));
     quickButtonsEl.appendChild(b);
   });
@@ -72,8 +87,8 @@ function renderButtons() {
 
 function onAddCategory() {
   const v = (newCategoryEl.value || "").trim();
-  if (!v) return alert("请输入分类名称");
-  if (categories.includes(v)) return alert("这个分类已存在");
+  if (!v) return alert(UI.inputCategoryName);
+  if (categories.includes(v)) return alert(UI.categoryExists);
   categories.unshift(v);
   saveCategories(categories);
   newCategoryEl.value = "";
@@ -105,7 +120,7 @@ function renderRecent() {
   recentListEl.innerHTML = "";
   const take = logs.slice(0, 30);
   if (take.length === 0) {
-    recentListEl.innerHTML = `<div class="item"><span>还没有记录</span><span class="mono">—</span></div>`;
+    recentListEl.innerHTML = `<div class="item"><span>${UI.noRecentLogs}</span><span class="mono">—</span></div>`;
     return;
   }
   take.forEach(x => {
@@ -129,8 +144,11 @@ function renderStats() {
     .slice(0); // copy
 
   // Summary text
-  summaryEl.textContent =
-    `区间：${formatDate(range.start)} ～ ${formatDate(range.end)}（不含结束日）｜记录数：${filtered.length}`;
+  summaryEl.textContent = UI.rangeSummary(
+    formatDate(range.start),
+    formatDate(range.end),
+    filtered.length
+  );
 
   // Group
   const byCat = new Map();
@@ -163,7 +181,7 @@ function renderStats() {
     summaryTableBody.appendChild(tr);
   });
   if (rows.length === 0) {
-    summaryTableBody.innerHTML = `<tr><td colspan="4">无数据</td></tr>`;
+    summaryTableBody.innerHTML = `<tr><td colspan="4">${UI.noData}</td></tr>`;
   }
 
   // Render raw table
@@ -173,13 +191,13 @@ function renderStats() {
     tr.innerHTML = `
       <td class="mono">${formatDateTime(x.ts)}</td>
       <td>${escapeHtml(x.category)}</td>
-      <td class="actions"><button data-id="${x.id}">删除</button></td>
+      <td class="actions"><button data-id="${x.id}">${UI.delete}</button></td>
     `;
     tr.querySelector("button").addEventListener("click", () => deleteLog(x.id));
     rawTableBody.appendChild(tr);
   });
   if (filtered.length === 0) {
-    rawTableBody.innerHTML = `<tr><td colspan="3">无数据</td></tr>`;
+    rawTableBody.innerHTML = `<tr><td colspan="3">${UI.noData}</td></tr>`;
   }
 }
 
@@ -196,7 +214,7 @@ function getRange(baseDate, mode) {
   } else if (mode === "quarter") {
     const q = Math.floor(start.getMonth() / 3); // 0..3
     start.setMonth(q * 3, 1);
-    start.setHours(0,0,0,0);
+    start.setHours(0, 0, 0, 0);
     end = new Date(start.getFullYear(), start.getMonth() + 3, 1);
   } else {
     end = addDays(start, 1);
@@ -210,14 +228,14 @@ function getRange(baseDate, mode) {
 
 // ===== Export =====
 function exportCSV() {
-  if (logs.length === 0) return alert("没有数据可导出");
+  if (logs.length === 0) return alert(UI.exportNoData);
 
   const header = ["timestamp", "datetime", "category"];
   const lines = [header.join(",")];
 
   logs.slice().reverse().forEach(x => {
     const dt = formatDateTime(x.ts);
-    lines.push([x.ts, `"${dt}"`, `"${x.category.replaceAll('"','""')}"`].join(","));
+    lines.push([x.ts, `"${dt}"`, `"${x.category.replaceAll('"', '""')}"`].join(","));
   });
 
   const blob = new Blob([lines.join("\n")], { type: "text/csv;charset=utf-8" });
@@ -231,7 +249,7 @@ function exportCSV() {
 
 // ===== Clear =====
 function onClearAll() {
-  if (!confirm("确定清空所有数据？此操作不可恢复。")) return;
+  if (!confirm(UI.confirmClear)) return;
   logs = [];
   categories = DEFAULT_CATEGORIES.slice();
   saveLogs(logs);
@@ -313,18 +331,22 @@ function escapeHtml(s) {
     .replaceAll('"', "&quot;")
     .replaceAll("'", "&#039;");
 }
-function backupJSON(){
+
+// ===== Backup =====
+function backupJSON() {
   const data = { logs, categories };
-  const blob = new Blob([JSON.stringify(data)], {type:'application/json'});
-  const a = document.createElement('a');
+  const blob = new Blob([JSON.stringify(data)], { type: "application/json" });
+  const a = document.createElement("a");
   a.href = URL.createObjectURL(blob);
-  a.download = 'backup.json';
+  a.download = "backup.json";
   a.click();
 }
+
+// ===== Supabase Test (Optional) =====
 async function testInsert() {
   const { data, error } = await supabase
     .from("activity_logs")
-    .insert([{ activity: "test", log_date: new Date().toISOString().slice(0,10) }])
+    .insert([{ activity: "test", log_date: new Date().toISOString().slice(0, 10) }])
     .select();
 
   console.log("insert data:", data);
