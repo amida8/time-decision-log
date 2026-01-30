@@ -1,63 +1,68 @@
 # time-decision-log
 
-A lightweight web application for **fast decision making and daily action tracking**.
+**素早い意思決定と日々の行動記録**のための、軽量なWebアプリケーション。
 
-Instead of spending time hesitating, you simply click an option to record what you are doing.  
-The app automatically logs the timestamp and generates **daily, monthly, and quarterly summaries** on a single page.
-
----
-
-## ✨ Features
-
-- ✅ **One-click action logging**  
-  Click a predefined or custom option to instantly record an activity.
-
-- 📊 **Automatic statistics**
-  - Daily summary
-  - Monthly summary
-  - Quarterly summary
-  - Category-based counts and percentages
-
-- 🧾 **Raw log table**
-  - View all records with timestamps
-  - Delete individual records if needed
-
-- 🗂 **Custom categories**
-  - Add your own activity options (e.g. study, coding, work, rest)
-  - Categories are saved locally
-
-- 💾 **Local storage**
-  - Data is stored in the browser using `localStorage`
-  - No backend, no account, no data upload
-
-- 📤 **CSV export**
-  - Export all records for further analysis
+迷う時間を減らし、選択肢をクリックするだけで  
+「今、何をしているか」を即座に記録できます。  
+アプリは自動でタイムスタンプを保存し、**日次・月次・四半期**のサマリーを  
+1ページにまとめて表示します。
 
 ---
 
-## 🧠 Purpose
+## ✨ 機能（Features）
 
-This project was created to solve a simple problem:
+- ✅ **ワンクリック行動ログ**  
+  あらかじめ用意された項目、または自分で追加した項目をクリックするだけで、
+  活動を即時記録できます。
 
-> **Don’t waste time overthinking decisions. Just act, record, and review.**
+- 📊 **自動統計**
+  - 日別サマリー
+  - 月別サマリー
+  - 四半期サマリー
+  - カテゴリー別の回数・割合
 
-By lowering the cost of recording actions, this tool helps:
-- Improve self-awareness
-- Reduce decision fatigue
-- Review how time is actually spent
+- 🧾 **生ログ一覧（Raw log table）**
+  - タイムスタンプ付きですべての記録を表示
+  - 必要に応じて個別に削除可能
+
+- 🗂 **カスタムカテゴリー**
+  - 学習、コーディング、仕事、休憩など、自由に項目を追加可能
+  - カテゴリーはローカルに保存されます
+
+- 💾 **ローカルストレージ**
+  - データはブラウザの `localStorage` に保存
+  - バックエンド不要、アカウント不要、データ送信なし
+
+- 📤 **CSVエクスポート**
+  - 全記録をCSV形式で出力し、外部分析が可能
 
 ---
 
-## 🛠 Tech Stack
+## 🧠 目的（Purpose）
+
+このプロジェクトは、次のシンプルな問題を解決するために作られました。
+
+> **考えすぎて時間を無駄にしない。  
+> 行動し、記録し、振り返るだけ。**
+
+行動記録のコストを極限まで下げることで、以下を実現します：
+- 自己認識の向上
+- 意思決定疲れの軽減
+- 実際に時間がどう使われているかの可視化
+
+---
+
+## 🛠 技術スタック（Tech Stack）
 
 - **HTML5**
 - **CSS3**
 - **Vanilla JavaScript**
-- **Browser LocalStorage**
+- **ブラウザ LocalStorage**
 
-No frameworks. No build tools. Runs instantly in the browser.
+フレームワークなし。ビルドツールなし。  
+ブラウザで即起動。
 
 ---
 https://amida8.github.io/time-decision-log/
 
-## 📂 Project Structure
+## 📂 プロジェクト構成（Project Structure）
