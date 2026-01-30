@@ -73,6 +73,8 @@ https://amida8.github.io/time-decision-log/
 
 ## 📂 プロジェクト構成（Project Structure）
 
+```text
+.
 ├── README.md
 │   └─ プロジェクト概要・機能説明・テスト内容
 ├── index.html
@@ -83,7 +85,7 @@ https://amida8.github.io/time-decision-log/
 │   └─ ユーザー操作・記録・集計などのロジック
 └── supabaseClient.js
     └─ Supabaseとの接続・データの取得／保存
-    
+
  構成の考え方
 - **HTML**：画面の構造を定義  
 - **CSS**：見た目と操作しやすさを調整  
