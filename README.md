@@ -85,6 +85,7 @@ https://amida8.github.io/time-decision-log/
 │   └─ ユーザー操作・記録・集計などのロジック
 └── supabaseClient.js
     └─ Supabaseとの接続・データの取得／保存
+```text
 
  構成の考え方
 - **HTML**：画面の構造を定義  
